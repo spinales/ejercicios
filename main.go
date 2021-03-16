@@ -24,7 +24,7 @@ func main() {
 	 si el numero actual de divisible entre 15, imprimir FIZZ BUZZ`)
 	flag.Parse()
 	if *fizz > 0 {
-		fmt.Println(fizzBuzz(*fizz))
+		fizzBuzzSecuencia(*fizz)
 	}
 
 	fibo := flag.Int("fibonacci", 0, "secuencia fibonacci, imprime el enesimo numero del numero dado.")

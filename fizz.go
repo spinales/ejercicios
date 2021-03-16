@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func fizzBuzz(value int) string {
 	if value%15 == 0 {
 		return "FIZZ BUZZ"
@@ -9,4 +11,10 @@ func fizzBuzz(value int) string {
 		return "BUZZ"
 	}
 	return ""
+}
+
+func fizzBuzzSecuencia(value int) {
+	for i := 1; i < value; i++ {
+		fmt.Println(fizzBuzz(i))
+	}
 }
