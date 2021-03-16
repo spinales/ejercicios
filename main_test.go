@@ -55,6 +55,18 @@ var casesFibonacci = []struct {
 	// {17, 800},
 }
 
+var casesReverse = []struct {
+	Value    string
+	Expected string
+}{
+	{"juan", "nauj"},
+	{"oso", "oso"},
+	{"World", "dlroW"},
+	{"Hello", "olleH"},
+	{"Geeks", "skeeG"},
+	{"Lee", "eeL"},
+}
+
 func TestPrimo(t *testing.T) {
 	for _, cc := range casesPrimos {
 		if CheckPrimo(cc.Value) != cc.Expected {
@@ -77,6 +89,15 @@ func TestFibonacci(t *testing.T) {
 		result := Fibonacci(f.Value)
 		if result != f.Expected {
 			t.Errorf("Expected: %v Got:%v", f.Expected, result)
+		}
+	}
+}
+
+func TestReverse(t *testing.T) {
+	for _, r := range casesReverse {
+		result := reverse(r.Value)
+		if result != r.Expected {
+			t.Errorf("Expected: %s Got:%s", r.Expected, result)
 		}
 	}
 }

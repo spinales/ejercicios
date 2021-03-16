@@ -5,12 +5,25 @@ import (
 )
 
 func main() {
-	var input int
+	// var input int
 
-	fmt.Println("Numero: ")
+	// fmt.Println("Numero: ")
+	// fmt.Scanln(&input)
+
+	var input string
+
+	fmt.Println("Texto: ")
 	fmt.Scanln(&input)
 
-	fmt.Println(Fibonacci(input))
+	fmt.Println(reverse(input))
+}
+
+func reverse(value string) string {
+	result := ""
+	for i := len(value); i > 0; i-- {
+		result = result + string(value[i-1])
+	}
+	return result
 }
 
 func Fibonacci(value int) int {
