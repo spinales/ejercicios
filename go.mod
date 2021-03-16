@@ -1,3 +1,3 @@
-module irvin
+module ejercicios
 
 go 1.16

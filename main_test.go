@@ -79,7 +79,7 @@ var casesOrdering = []struct {
 
 func TestPrimo(t *testing.T) {
 	for _, cc := range casesPrimos {
-		if CheckPrimo(cc.Value) != cc.Expected {
+		if checkPrimo(cc.Value) != cc.Expected {
 			t.Errorf("Expected: %v Got:%v", cc.Expected, !cc.Expected)
 		}
 	}
