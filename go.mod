@@ -1,3 +1,3 @@
-module primos
+module irvin
 
 go 1.16

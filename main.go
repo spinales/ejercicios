@@ -10,9 +10,17 @@ func main() {
 	fmt.Println("Numero: ")
 	fmt.Scanln(&input)
 
-	for i := 1; i < input; i++ {
-		fmt.Println(FizzBuzz(i))
+	fmt.Println(Fibonacci(input))
+}
+
+func Fibonacci(value int) int {
+	a, b, c := 0, 1, 0
+	for i := 1; i < value; i++ {
+		c = a + b
+		a = b
+		b = c
 	}
+	return a
 }
 
 func FizzBuzz(value int) string {
