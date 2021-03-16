@@ -67,6 +67,16 @@ var casesReverse = []struct {
 	{"Lee", "eeL"},
 }
 
+var casesOrdering = []struct {
+	Value    string
+	Expected string
+}{
+	{"juan", "ajnu"},
+	{"amigo", "agimo"},
+	{"atolondrado", "aaddlnooort"},
+	{"la4veces 1", " 14aceelsv"},
+}
+
 func TestPrimo(t *testing.T) {
 	for _, cc := range casesPrimos {
 		if CheckPrimo(cc.Value) != cc.Expected {
@@ -96,6 +106,15 @@ func TestFibonacci(t *testing.T) {
 func TestReverse(t *testing.T) {
 	for _, r := range casesReverse {
 		result := reverse(r.Value)
+		if result != r.Expected {
+			t.Errorf("Expected: %s Got:%s", r.Expected, result)
+		}
+	}
+}
+
+func TestOrdering(t *testing.T) {
+	for _, r := range casesOrdering {
+		result := orderingByte(r.Value)
 		if result != r.Expected {
 			t.Errorf("Expected: %s Got:%s", r.Expected, result)
 		}

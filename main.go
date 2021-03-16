@@ -1,21 +1,46 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"sort"
 )
 
 func main() {
-	// var input int
+	ordena := flag.String("ordena", "", "ordena una palabra o una oracion.")
+	flag.Parse()
+	fmt.Println(orderingByte(*ordena))
 
-	// fmt.Println("Numero: ")
-	// fmt.Scanln(&input)
+	revr := flag.String("reverse", "", "imprime una palabra al reves.")
+	flag.Parse()
+	fmt.Println(reverse(*revr))
 
-	var input string
+	primo := flag.Int("primo", -1, "determina si un numero es primo o no.")
+	flag.Parse()
+	if *primo >= 0 {
+		fmt.Println(FizzBuzz(*primo))
+	}
 
-	fmt.Println("Texto: ")
-	fmt.Scanln(&input)
+	fizz := flag.Int("fizzbuzz", 0, `si el numero actual es divisible entre 3, imprimir FIZZ. si el numero actual es divisible entre 5, imprimir BUZZ
+	 si el numero actual de divisible entre 15, imprimir FIZZ BUZZ`)
+	flag.Parse()
+	if *fizz > 0 {
+		fmt.Println(FizzBuzz(*fizz))
+	}
 
-	fmt.Println(reverse(input))
+	fibo := flag.Int("fibonacci", 0, "secuencia fibonacci, imprime el enesimo numero del numero dado.")
+	flag.Parse()
+	if *fibo > 0 {
+		fmt.Println(Fibonacci(*fibo))
+	}
+}
+
+func orderingByte(value string) string {
+	arr := []byte(value)
+	sort.Slice(arr, func(i, j int) bool {
+		return arr[i] < arr[j]
+	})
+	return string(arr)
 }
 
 func reverse(value string) string {
