@@ -1,5 +1,4 @@
-name: Go
-
+name: Deployment workflow
 on:
   push:
     branches: [ master ]
@@ -21,3 +20,31 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+    
+    - name: ls with ssh
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          cd /root
+          ls -a
+        host: ${{secrets.HOST}}
+        user: root
+        Key: ${{secrets.SSH_KEY}}
+
+    - name: clone repo
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          git clone https://github.com/spinales/ejercicios.git
+        host: ${{secrets.HOST}}
+        user: root
+        Key: ${{secrets.SSH_KEY}}
+    
+    - name: ls with ssh
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          ls -la
+        host: ${{secrets.HOST}}
+        user: root
+        Key: ${{secrets.SSH_KEY}}
