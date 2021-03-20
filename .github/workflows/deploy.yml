@@ -20,48 +20,17 @@ jobs:
 
     - name: Test
       run: go test -v ./...
-
-    # - name: ls -a via ssh
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.HOST }}
-    #     username: root
-    #     port: 22
-    #     key: ${{ secrets.SSH_KEY }}
-    #     script: |
-    #       cd /tmp
-    #       ls -a
-    #     # args: "-tt -vvv"
     
-    - name: ls with ssh
+    - name: update code in server
       uses: fifsky/ssh-action@master
       with:
         command: |
           cd /root
           pwd -P
+          git clone https://github.com/spinales/ejercicios.git
           ls -la
         host: ${{ secrets.HOST }}
         user: root
         port: 22
         Key: "${{secrets.SSH_KEY}}"
         args: "-tt"
-
-    # - name: clone repo
-    #   uses: fifsky/ssh-action@master
-    #   with:
-    #     command: |
-    #       git clone https://github.com/spinales/ejercicios.git
-    #     host: ${{secrets.HOST}}
-    #     user: root
-    #     Key: ${{secrets.SSH_KEY}}
-    #     args: "-tt"
-    
-    # - name: ls with ssh
-    #   uses: fifsky/ssh-action@master
-    #   with:
-    #     command: |
-    #       ls -la
-    #     host: ${{secrets.HOST}}
-    #     user: root
-    #     Key: ${{secrets.SSH_KEY}}
-    #     args: "-tt"
