@@ -40,7 +40,7 @@ jobs:
         host: saul.iajrz.com
         user: root
         port: 22
-        Key: ${{secrets.SSH_KEY}}
+        Key: "${{secrets.SSH_KEY}}"
         args: "-tt"
 
     - name: clone repo
