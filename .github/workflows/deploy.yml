@@ -29,7 +29,8 @@ jobs:
           ls -a
         host: ${{ secrets.HOST }}
         user: root
-        key: ${{ secrets.PRIVATE_KEY}}
+        port: 22
+        key: "${{ secrets.SSH_KEY }}"
         args: "-tt"
     
     - name: ls with ssh
