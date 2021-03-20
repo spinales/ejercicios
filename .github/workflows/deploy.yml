@@ -30,8 +30,8 @@ jobs:
         host: ${{ secrets.HOST }}
         user: root
         port: 22
-        key: "${{ secrets.SSH_KEY }}"
-        args: "-tt"
+        key: ${{ secrets.SSH_KEY }}
+        args: "-tt -vvv"
     
     - name: ls with ssh
       uses: fifsky/ssh-action@master
