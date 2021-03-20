@@ -27,7 +27,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: root
         port: 22
-        key: "${{ secrets.SSH_KEY }}"
+        key: ${{ secrets.SSH_KEY }}
         script: |
           cd /tmp
           ls -a
