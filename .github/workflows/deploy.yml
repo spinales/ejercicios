@@ -30,6 +30,7 @@ jobs:
         host: ${{secrets.HOST}}
         user: root
         Key: ${{secrets.SSH_KEY}}
+        args: "-tt"
 
     - name: clone repo
       uses: fifsky/ssh-action@master
@@ -39,6 +40,7 @@ jobs:
         host: ${{secrets.HOST}}
         user: root
         Key: ${{secrets.SSH_KEY}}
+        args: "-tt"
     
     - name: ls with ssh
       uses: fifsky/ssh-action@master
@@ -48,3 +50,4 @@ jobs:
         host: ${{secrets.HOST}}
         user: root
         Key: ${{secrets.SSH_KEY}}
+        args: "-tt"
