@@ -22,44 +22,44 @@ jobs:
       run: go test -v ./...
 
     - name: ls -a via ssh
-      uses: fifsky/ssh-action@master
+      uses: appleboy/ssh-action@master
       with:
-        command: |
-          cd /tmp
-          ls -a
         host: ${{ secrets.HOST }}
-        user: root
+        username: root
         port: 22
         key: "${{ secrets.SSH_KEY }}"
-        args: "-tt -vvv"
-    
-    - name: ls with ssh
-      uses: fifsky/ssh-action@master
-      with:
-        command: |
+        script: |
+          cd /tmp
           ls -a
-        host: saul.iajrz.com
-        user: root
-        port: 22
-        Key: "${{secrets.SSH_KEY}}"
-        args: "-tt"
-
-    - name: clone repo
-      uses: fifsky/ssh-action@master
-      with:
-        command: |
-          git clone https://github.com/spinales/ejercicios.git
-        host: ${{secrets.HOST}}
-        user: root
-        Key: ${{secrets.SSH_KEY}}
-        args: "-tt"
+        # args: "-tt -vvv"
     
-    - name: ls with ssh
-      uses: fifsky/ssh-action@master
-      with:
-        command: |
-          ls -la
-        host: ${{secrets.HOST}}
-        user: root
-        Key: ${{secrets.SSH_KEY}}
-        args: "-tt"
+    # - name: ls with ssh
+    #   uses: fifsky/ssh-action@master
+    #   with:
+    #     command: |
+    #       ls -a
+    #     host: saul.iajrz.com
+    #     user: root
+    #     port: 22
+    #     Key: "${{secrets.SSH_KEY}}"
+    #     args: "-tt"
+
+    # - name: clone repo
+    #   uses: fifsky/ssh-action@master
+    #   with:
+    #     command: |
+    #       git clone https://github.com/spinales/ejercicios.git
+    #     host: ${{secrets.HOST}}
+    #     user: root
+    #     Key: ${{secrets.SSH_KEY}}
+    #     args: "-tt"
+    
+    # - name: ls with ssh
+    #   uses: fifsky/ssh-action@master
+    #   with:
+    #     command: |
+    #       ls -la
+    #     host: ${{secrets.HOST}}
+    #     user: root
+    #     Key: ${{secrets.SSH_KEY}}
+    #     args: "-tt"
