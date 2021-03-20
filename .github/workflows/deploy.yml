@@ -37,8 +37,9 @@ jobs:
       with:
         command: |
           ls -a
-        host: ${{secrets.HOST}}
+        host: saul.iajrz.com
         user: root
+        port: 22
         Key: ${{secrets.SSH_KEY}}
         args: "-tt"
 
