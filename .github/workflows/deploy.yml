@@ -25,7 +25,6 @@ jobs:
       uses: fifsky/ssh-action@master
       with:
         command: |
-          cd /root
           ls -a
         host: ${{secrets.HOST}}
         user: root
