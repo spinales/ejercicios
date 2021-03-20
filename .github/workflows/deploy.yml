@@ -21,28 +21,30 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-    - name: ls -a via ssh
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: root
-        port: 22
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          cd /tmp
-          ls -a
-        # args: "-tt -vvv"
-    
-    # - name: ls with ssh
-    #   uses: fifsky/ssh-action@master
+    # - name: ls -a via ssh
+    #   uses: appleboy/ssh-action@master
     #   with:
-    #     command: |
-    #       ls -a
-    #     host: saul.iajrz.com
-    #     user: root
+    #     host: ${{ secrets.HOST }}
+    #     username: root
     #     port: 22
-    #     Key: "${{secrets.SSH_KEY}}"
-    #     args: "-tt"
+    #     key: ${{ secrets.SSH_KEY }}
+    #     script: |
+    #       cd /tmp
+    #       ls -a
+    #     # args: "-tt -vvv"
+    
+    - name: ls with ssh
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          cd /root
+          pwd -P
+          ls -la
+        host: ${{ secrets.HOST }}
+        user: root
+        port: 22
+        Key: "${{secrets.SSH_KEY}}"
+        args: "-tt"
 
     # - name: clone repo
     #   uses: fifsky/ssh-action@master
