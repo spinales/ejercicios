@@ -40,20 +40,22 @@ jobs:
           cd /root/ejercicios
           go clean
           go build
+          ls -l
         host: ${{ secrets.HOST }}
         user: root
         port: 22
         Key: "${{secrets.SSH_KEY}}"
         args: "-tt"
 
-    # - name: restart app
-    #   uses: fifsky/ssh-action@master
-    #   with:
-    #     command: |
-          
-    #     host: ${{ secrets.HOST }}
-    #     user: root
-    #     port: 22
-    #     Key: "${{secrets.SSH_KEY}}"
-    #     args: "-tt"
+    - name: restart app
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          systemctl restart saulapp
+          systemctl status saulapp
+        host: ${{ secrets.HOST }}
+        user: root
+        port: 22
+        Key: "${{secrets.SSH_KEY}}"
+        args: "-tt"
       
