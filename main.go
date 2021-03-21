@@ -13,11 +13,12 @@ func main() {
 	 si el número actual de divisible entre 15, imprimir FIZZ BUZZ`)
 	fibo := flag.Int("fibonacci", 0, "secuencia fibonacci, imprime el enésimo número del numero dado.")
 	servr := flag.Bool("server", false, "inicia un servidor básico.")
+	sqlite := flag.Bool("sqlite", false, "crea una base de datos sqlite.")
 
 	flag.Parse()
 
-	fmt.Println(orderingByte(*ordena))
-	fmt.Println(reverse(*revr))
+	fmt.Print(orderingByte(*ordena))
+	fmt.Print(reverse(*revr))
 
 	if *primo >= 0 {
 		primos(*primo)
@@ -33,5 +34,9 @@ func main() {
 
 	if *servr {
 		server()
+	}
+
+	if *sqlite {
+		SQLite()
 	}
 }
