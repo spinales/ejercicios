@@ -38,8 +38,8 @@ jobs:
       with:
         command: |
           cd /root/ejercicios
-          rm app
-          go build -o app
+          go clean
+          go build 
           ls -l
         host: ${{ secrets.HOST }}
         user: root
@@ -51,8 +51,8 @@ jobs:
       uses: fifsky/ssh-action@master
       with:
         command: |
-          systemctl restart saulapp
-          systemctl status saulapp
+          systemctl restart webapp
+          systemctl status webapp
         host: ${{ secrets.HOST }}
         user: root
         port: 22
