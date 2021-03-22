@@ -11,9 +11,15 @@ func server() {
 
 	http.HandleFunc("/form", form)
 	http.HandleFunc("/process", formProcess)
+	http.HandleFunc("/home", home)
 
 	log.Println("app runing :8000")
 	http.ListenAndServe(":8000", nil)
+}
+
+func home(w http.ResponseWriter, r *http.Request) {
+	tpl := template.Must(template.ParseGlob("files/*.html"))
+	tpl.ExecuteTemplate(w, "home.html", nil)
 }
 
 func form(w http.ResponseWriter, r *http.Request) {
