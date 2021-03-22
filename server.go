@@ -10,6 +10,7 @@ import (
 func server() {
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./files"))))
 
+	http.HandleFunc("/login", login)
 	http.HandleFunc("/secret", secret)
 	http.HandleFunc("/form", form)
 	http.HandleFunc("/process", formProcess)
@@ -19,7 +20,16 @@ func server() {
 	http.ListenAndServe(":8000", nil)
 }
 
+func login(w http.ResponseWriter, r *http.Request) {
+	tpl := template.Must(template.ParseGlob("files/*.html"))
+	tpl.ExecuteTemplate(w, "login.html", nil)
+}
+
 func secret(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		r.SetBasicAuth(r.FormValue("username"), r.FormValue("password"))
+	}
+
 	u, p, ok := r.BasicAuth()
 
 	if !ok {
@@ -30,13 +40,13 @@ func secret(w http.ResponseWriter, r *http.Request) {
 
 	if u != "admin" {
 		fmt.Println("Username provided is incorrect: ", u)
-		http.Redirect(w, r, "/", http.StatusUnauthorized)
+		http.Redirect(w, r, "/", http.StatusPermanentRedirect)
 		return
 	}
 
 	if p != "Pass123" {
 		fmt.Println("Password provided is incorrect: ", p)
-		http.Redirect(w, r, "/", http.StatusUnauthorized)
+		http.Redirect(w, r, "/", http.StatusPermanentRedirect)
 		return
 	}
 
