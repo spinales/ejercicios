@@ -24,19 +24,19 @@ func secret(w http.ResponseWriter, r *http.Request) {
 
 	if !ok {
 		fmt.Println("Error parsing basic auth")
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
 	if u != "admin" {
 		fmt.Println("Username provided is incorrect: ", u)
-		http.Redirect(w, r, "/login", http.StatusUnauthorized)
+		http.Redirect(w, r, "/", http.StatusUnauthorized)
 		return
 	}
 
 	if p != "Pass123" {
 		fmt.Println("Password provided is incorrect: ", p)
-		http.Redirect(w, r, "/login", http.StatusUnauthorized)
+		http.Redirect(w, r, "/", http.StatusUnauthorized)
 		return
 	}
 
