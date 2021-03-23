@@ -5,19 +5,58 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
+
+	"github.com/gofrs/uuid"
 )
+
+var users = map[string]string{
+	"admin": "Pass123",
+	"irvin": "123456",
+}
 
 func server() {
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./files"))))
 
-	http.HandleFunc("/login", login)
+	http.HandleFunc("/signin", signin)
+	// authentication required
 	http.HandleFunc("/secret", secret)
+	// send basic form data
 	http.HandleFunc("/form", form)
+	// get data from form and print
 	http.HandleFunc("/process", formProcess)
 	http.HandleFunc("/home", home)
 
 	log.Println("app runing :8000")
 	http.ListenAndServe(":8000", nil)
+}
+
+func signin(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		tpl := template.Must(template.ParseGlob("files/*.html"))
+		tpl.ExecuteTemplate(w, "login.html", nil)
+		return
+	}
+
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+
+	expectedPassword, ok := users[username]
+
+	if !ok || expectedPassword != password {
+		http.Redirect(w, r, "/", http.StatusPermanentRedirect)
+		return
+	}
+
+	sessionToken, _ := uuid.NewV4()
+
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session_token",
+		Value:   sessionToken.String(),
+		Expires: time.Now().Add(24 * time.Hour),
+	})
+
+	http.Redirect(w, r, "/secret", http.StatusPermanentRedirect)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
@@ -26,27 +65,13 @@ func login(w http.ResponseWriter, r *http.Request) {
 }
 
 func secret(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		r.SetBasicAuth(r.FormValue("username"), r.FormValue("password"))
-	}
-
-	u, p, ok := r.BasicAuth()
-
-	if !ok {
-		fmt.Println("Error parsing basic auth")
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-
-	if u != "admin" {
-		fmt.Println("Username provided is incorrect: ", u)
-		http.Redirect(w, r, "/", http.StatusPermanentRedirect)
-		return
-	}
-
-	if p != "Pass123" {
-		fmt.Println("Password provided is incorrect: ", p)
-		http.Redirect(w, r, "/", http.StatusPermanentRedirect)
+	c, err := r.Cookie("session_token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -55,7 +80,7 @@ func secret(w http.ResponseWriter, r *http.Request) {
 		Content string
 	}{
 		"Pagina secreta",
-		"contenido de pagina secreta",
+		fmt.Sprintf("Bienvenido %s a la pagina secreta", c.Value),
 	}
 
 	tpl := template.Must(template.ParseGlob("files/*.html"))
