@@ -26,6 +26,7 @@ jobs:
       with:
         command: |
           cd /root/ejercicios
+          git reset --hard
           git pull origin master
         host: ${{ secrets.HOST }}
         user: root
